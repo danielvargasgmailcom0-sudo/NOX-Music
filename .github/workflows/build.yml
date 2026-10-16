@@ -30,8 +30,12 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Compilar APK
-        run: gradle assembleDebug
+      - name: Verificar XML del manifiesto
+        run: |
+          python3 -c "import xml.etree.ElementTree as ET; ET.parse('app/src/main/AndroidManifest.xml'); print('XML correcto')"
+
+      - name: Compilar APK con detalles
+        run: gradle assembleDebug --stacktrace --info
 
       - name: Guardar APK
         uses: actions/upload-artifact@v4
